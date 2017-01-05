@@ -10,7 +10,7 @@ SIZE      := $(TARGET_PREFIX)size
 TOP=$(shell pwd)
 TARGET=run.elf
 C_SOURCE_FILES +=  	main.c         \
-					
+
 
 OBJ=$(C_SOURCE_FILES:.c=.o)
 
@@ -21,6 +21,7 @@ CFLAGS  = -c
 #CFLAGS += -Wextra
 CFLAGS += -ggdb
 CFLAGS += $(addprefix -I, $(INC_PATHS))
+LDFLAGS+= -lm
 
 all: clean $(TARGET)
 
@@ -28,7 +29,7 @@ all: clean $(TARGET)
 	$(CC) $(CFLAGS)  $< -o $@
 
 $(TARGET): $(OBJ)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 clean:
 	@find $(TOP) -type f -name "*.o"  -delete
